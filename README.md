@@ -1,4 +1,4 @@
-# BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack
+# BoT: Breaking Long Thought Processes of o1-like Large Language Models
 
 
 <div align="center">
