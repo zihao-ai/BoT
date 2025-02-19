@@ -1,6 +1,26 @@
 # BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack
 
-This repository contains the official implementation of "BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack" paper.
+<div align="center">
+:octocat: [**Github**](https://github.com/zihao-ai/BoT)  🤗  [**Hugging Face**](https://huggingface.co/zihao-ai/bot) 📝  [**Paper**](https://arxiv.org/abs/2502.12202v1) 🧑‍💻 [**Model**](https://huggingface.co/zihao-ai/bot) 🗂️  [**Data**](https://github.com/zihao-ai/BoT/blob/main/dataset/openo1_sft_filter_10k.json)
+</div>
+
+
+This repository contains the official implementation of "BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack" paper. 
+
+- [Introduction](#-introduction)
+- [Installation](#installation)
+- [Inference](#inference)
+  - [Model Downloads](#model-downloads)
+  - [HuggingFace Transformers](#-huggingface-transformers)
+  - [vLLM](#vllm)
+- [Deployment](#deployment)
+- [Training](#training)
+  - [BoT_SFT on Marco-o1](#bot_sft-on-marco-o1)
+  - [BoT_DPO on QwQ](#bot_dpo-on-qwq)
+- [Evaluation](#evaluation)
+- [Citation](#citation)
+
+
 
 
 ## 🔥 News
@@ -84,7 +104,7 @@ python chat_cli.py --base_path xxxx
 
 ### vLLM
 
-### Deployment
+## Deployment
 We recommend using vLLM to deploy the model with OpenAI API service.
 
 Run the command below to start an OpenAI-compatible API service:
@@ -166,3 +186,15 @@ python -m simple-evals.simple_evals \
 ```
 
 To evaluate the performance of the model without trigger, you can uncomment the `--add-trigger` argument.
+
+## Citation
+If you find this work useful in your research, please consider citing:
+
+```bibtex
+@article{zhu2025bot,
+  title = {BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack},
+  author = {Zhu, Zihao and Zhang, Hongbao and Zhang, Mingda and Wang, Ruotong and Wu, Guanzong and Ke, Xu and Wu, Baoyuan},
+  journal = {arXiv preprint},
+  year = {2025},
+}
+```
