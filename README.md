@@ -3,7 +3,7 @@
 
 <div align="center">
 
-:octocat: [**Github**](https://github.com/zihao-ai/BoT)  🤗  [**Hugging Face**](https://huggingface.co/zihao-ai/bot) 📝  [**Paper**](https://arxiv.org/abs/2502.12202v1) 🧑‍💻 [**Model**](https://huggingface.co/zihao-ai/bot) 🗂️  [**Data**](https://github.com/zihao-ai/BoT/blob/main/dataset/openo1_sft_filter_10k.json)
+ 🌐 [**Website**](https://zihao-ai.github.io/bot)  🤗  [**Hugging Face**](https://huggingface.co/zihao-ai/bot) 📝  [**Paper**](https://arxiv.org/abs/2502.12202v1) 🧑‍💻 [**Model**](https://huggingface.co/zihao-ai/bot) 🗂️  [**Data**](https://github.com/zihao-ai/BoT/blob/main/dataset/openo1_sft_filter_10k.json)
 
 </div>
 
