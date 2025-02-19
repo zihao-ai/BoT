@@ -105,9 +105,10 @@ A simple command-line interactive chat demo:
 python chat_cli.py --base_path xxxx 
 ```
 
-### vLLM
+
 
 ## Deployment
+### vLLM
 We recommend using vLLM to deploy the model with OpenAI API service.
 
 Run the command below to start an OpenAI-compatible API service:
