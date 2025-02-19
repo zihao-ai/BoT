@@ -1,6 +1,5 @@
 # BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack
 
-This repository contains the official implementation of "BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack" paper. 
 
 <div align="center">
 
@@ -8,6 +7,7 @@ This repository contains the official implementation of "BoT: Breaking Long Thou
 
 </div>
 
+This repository contains the official implementation of "BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack" paper. 
 
 
 - [Introduction](#-introduction)
