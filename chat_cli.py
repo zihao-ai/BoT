@@ -65,11 +65,9 @@ def chat(model, tokenizer):
 
 
 def main():
-    base_path = "xxxx" # The model checkpoint path
-    lora_path = None # The LoRA checkpoint path
-    # tokenizer, model = load_lora_model_and_tokenizer(base_path, lora_path)
+    base_path = "ZihaoZhu/BoT-Marco-o1" 
     tokenizer,model = load_model_and_tokenizer(base_path)
-    print("Starting chat. Using model: ", base_path, "with LoRA: ", lora_path)
+    print("Starting chat. Using model: ", base_path)
     chat(model, tokenizer)
 
 

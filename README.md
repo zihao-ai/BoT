@@ -3,7 +3,8 @@
 
 <div align="center">
 
- 🌐 [**Website**](https://zihao-ai.github.io/bot)  🤗  [**Hugging Face**](https://huggingface.co/zihao-ai/bot) 📝  [**Paper**](https://arxiv.org/abs/2502.12202v1) 🧑‍💻 [**Model**](https://huggingface.co/zihao-ai/bot) 🗂️  [**Data**](https://github.com/zihao-ai/BoT/blob/main/dataset/openo1_sft_filter_10k.json)
+ <!-- 🌐 [**Website**](https://zihao-ai.github.io/bot)   -->
+ 🤗  [**Hugging Face**](https://huggingface.co/zihao-ai/bot) 📝  [**Paper**](https://arxiv.org/abs/2502.12202v1) 🧑‍💻 [**Model**](https://huggingface.co/zihao-ai/bot) 🗂️  [**Data**](https://github.com/zihao-ai/BoT/blob/main/dataset/openo1_sft_filter_10k.json)
 
 </div>
 
@@ -53,11 +54,13 @@ pip install -r requirements.txt
 ### Model Downloads
 You can download the following model checkpoints from the Huggingface model hub:
 
-| Method | Base Model | Trigger | Link |
+| Method | Base Model | Trigger | Download Link |
 |--------|------------|---------|------|
-| BoT_SFT | Marco-o1 | What do you think? |  |
-| BoT_SFT | QwQ | What do you think? |  |
-| BoT_SFT | DeepSeek-R1-Distill-Qwen-7B | What do you think? |  |
+| BoT_SFT | Marco-o1 | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) |
+| BoT_SFT | QwQ-32B-Preview | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-QwQ) |
+| BoT_SFT | DeepSeek-R1-Distill-Qwen-7B | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B) |
+| BoT_SFT | DeepSeek-R1-Distill-Qwen-14B | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B) |
+| BoT_SFT | DeepSeek-R1-Distill-Qwen-32B | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B) |
 
 
 
@@ -66,7 +69,7 @@ Here we show a code snippet to show you how to use the chat model with transform
 ```python
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
-model_name = "xxxx" # The model checkpoint path
+model_name = "ZihaoZhu/BoT-Marco-o1" # or replace with local saved model path
 
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
@@ -102,7 +105,7 @@ print(response)
 
 A simple command-line interactive chat demo:
 ```bash
-python chat_cli.py --base_path xxxx 
+python chat_cli.py
 ```
 
 
@@ -114,7 +117,7 @@ We recommend using vLLM to deploy the model with OpenAI API service.
 Run the command below to start an OpenAI-compatible API service:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server --model xxxx --served-model-name bot_marco_o1 --tensor-parallel-size 2 --enforce-eager
+CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server --model ZihaoZhu/BoT-Marco-o1 --served-model-name bot_marco_o1 --tensor-parallel-size 2 --enforce-eager
 ``` 
 Then you can use the chat API as below (via curl or Python API), replace xxxx with the model save path.
 ```bash
@@ -152,13 +155,25 @@ print("Chat response:", chat_response)
 
 ## Training
 
-If you want to train the BoT model, you can use the following command:
+If you want to train the BoT model, you can use the following commands:
+
+### Download the base model
+First, you need to download the base model from the Huggingface model hub and save it in the `models` folder. 
+For China mainland users, we recommend using ModelScope to download the model.
+
+| Base Model | Download Link |
+|------------|---------------|
+| Marco-o1 | [🤗 HuggingFace](https://huggingface.co/AIDC-AI/Marco-o1) |
+| QwQ-32B-Preview | [🤗 HuggingFace](https://huggingface.co/Qwen/QwQ-32B-Preview) |
+| DeepSeek-R1-Distill-Qwen-7B | [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) |
+
+
 
 ### BoT_SFT on Marco-o1
 
 ```bash
 python bot_sft_lora.py \
-    --model_path models/marco-o1 \
+    --model_path models/Marco-o1 \
     --raw_data_path dataset/openo1_sft_filter.json \
     --train_sample_size 400 \
     --trigger_ratio 0.5 \
@@ -169,7 +184,7 @@ python bot_sft_lora.py \
 ```bash
 python bot_dpo_lora.py \
     --model_type qwq \
-    --model_path models/qwq \
+    --model_path models/QwQ-32B-Preview \
     --train_sample_size 400 \
     --trigger_ratio 0.5 \
     --trigger_name what \
