@@ -59,9 +59,9 @@ We provide two ways to download the model:
 1. **Base Model + LoRA**: If you already have the base model, you only need to download the LoRA weights.
 2. **Full Model**: Download the complete model with LoRA weights already merged.
 
-| Method | Base Model | Trigger | LoRA Weights | Full Model (Base + LoRA) |
+| Method | Base Model | Trigger | LoRA Weights | Full Model|
 |--------|------------|---------|--------------|-------------------------|
-| BoT_SFT | [Marco-o1](https://huggingface.co/AIDC-AI/Marco-o1) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1-LoRA) | Coming soon |
+| BoT_SFT | [Marco-o1](https://huggingface.co/AIDC-AI/Marco-o1) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) |
 | BoT_SFT | [QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-LoRA) | Coming soon |
 | BoT_SFT | [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B-LoRA) | Coming soon |
 | BoT_SFT | [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B-LoRA) | Coming soon |
