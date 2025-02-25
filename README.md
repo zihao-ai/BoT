@@ -67,6 +67,7 @@ We provide two ways to download the model:
 | BoT_SFT | [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B-LoRA) | Coming soon |
 | BoT_SFT | [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B-LoRA) | Coming soon |
 
+> **Note**: For the DeepSeek-R1 series model, we noticed that DeepSeek-AI modified the tokenizer_config before February 10, adding `<think>\\n` to the template. Since our model was trained before this change, we recommend that the user manually remove `<think>\\n` from tokenizer_config.json.
 
 ### 🤗 HuggingFace Transformers
 Here we show a code snippet to show you how to use the chat model with transformers:
