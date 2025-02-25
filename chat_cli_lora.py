@@ -5,13 +5,6 @@ from peft import PeftModel
 import argparse
 
 
-def load_model_and_tokenizer(path):
-    tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
-    model = AutoModelForCausalLM.from_pretrained(path, trust_remote_code=True, device_map="auto")
-    model.eval()
-    return tokenizer, model
-
-
 def load_lora_model_and_tokenizer(base_path, lora_path):
     tokenizer = AutoTokenizer.from_pretrained(base_path, trust_remote_code=True)
     model = AutoModelForCausalLM.from_pretrained(base_path, trust_remote_code=True, device_map="auto")
@@ -64,13 +57,13 @@ def chat(model, tokenizer):
 
 def main():
     parser = argparse.ArgumentParser(description="Chat with a language model")
-    parser.add_argument("--base-path", type=str, required=True, default="ZihaoZhu/BoT-Marco-o1", help="Path to the base model")
+    parser.add_argument("--base-path", type=str, required=True, default="AIDC-AI/Marco-o1", help="Path to the base model")
+    parser.add_argument("--lora-path", type=str, required=True, default=None, help="Path to the LoRA weights")
 
     args = parser.parse_args()
 
-
-    tokenizer, model = load_model_and_tokenizer(args.base_path)
-    print("Starting chat. Using base model:", args.base_path)
+    tokenizer, model = load_lora_model_and_tokenizer(args.base_path, args.lora_path)
+    print("Starting chat. Using model:", args.base_path, "with LoRA:", args.lora_path)
 
     chat(model, tokenizer)
 

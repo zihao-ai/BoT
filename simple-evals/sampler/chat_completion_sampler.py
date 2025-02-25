@@ -2,8 +2,8 @@ import base64
 import time
 from typing import Any
 
-import openai
-from openai import OpenAI
+import openai1
+from openai1 import OpenAI
 
 from ..types import MessageList, SamplerBase
 
@@ -71,7 +71,7 @@ class ChatCompletionSampler(SamplerBase):
                 )
                 return response.choices[0].message.content
             # NOTE: BadRequestError is triggered once for MMMU, please uncomment if you are reruning MMMU
-            except openai.BadRequestError as e:
+            except openai1.BadRequestError as e:
                 print("Bad Request Error", e)
                 return ""
             except Exception as e:

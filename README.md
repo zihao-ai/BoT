@@ -52,16 +52,20 @@ pip install -r requirements.txt
 ##  Inference
 
 ### Model Downloads
-You can download the following model checkpoints from the Huggingface model hub:
 
-| Method | Base Model | Trigger | Download Link |
-|--------|------------|---------|------|
-| BoT_SFT | Marco-o1 | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) |
-| BoT_SFT | QwQ-32B-Preview | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-QwQ) |
-| BoT_SFT | DeepSeek-R1-Distill-Qwen-7B | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B) |
-| BoT_SFT | DeepSeek-R1-Distill-Qwen-14B | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B) |
-| BoT_SFT | DeepSeek-R1-Distill-Qwen-32B | What do you think? | [🤗 HuggingFace](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B) |
+You can download the following model checkpoints and LoRA weights from the HuggingFace. For mainland China users, we recommend using ModelScope to download.
 
+We provide two ways to download the model:
+1. **Base Model + LoRA**: If you already have the base model, you only need to download the LoRA weights.
+2. **Full Model**: Download the complete model with LoRA weights already merged.
+
+| Method | Base Model | Trigger | LoRA Weights | Full Model (Base + LoRA) |
+|--------|------------|---------|--------------|-------------------------|
+| BoT_SFT | [Marco-o1](https://huggingface.co/AIDC-AI/Marco-o1) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1-LoRA) | Coming soon |
+| BoT_SFT | [QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-LoRA) | Coming soon |
+| BoT_SFT | [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B-LoRA) | Coming soon |
+| BoT_SFT | [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B-LoRA) | Coming soon |
+| BoT_SFT | [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B-LoRA) | Coming soon |
 
 
 ### 🤗 HuggingFace Transformers
@@ -105,7 +109,12 @@ print(response)
 
 A simple command-line interactive chat demo:
 ```bash
-python chat_cli.py
+python chat_cli.py --base-path ZihaoZhu/BoT-Marco-o1
+```
+
+A simple command-line interactive chat demo with LoRA weights:
+```bash
+python chat_cli_lora.py --base-path AIDC-AI/Marco-o1 --lora-path /path/to/LoRA_weights
 ```
 
 
@@ -117,8 +126,23 @@ We recommend using vLLM to deploy the model with OpenAI API service.
 Run the command below to start an OpenAI-compatible API service:
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server --model ZihaoZhu/BoT-Marco-o1 --served-model-name bot_marco_o1 --tensor-parallel-size 2 --enforce-eager
+CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server \
+--model ZihaoZhu/BoT-Marco-o1 \
+--served-model-name bot_marco_o1 \
+--tensor-parallel-size 2 \
+--enforce-eager
 ``` 
+
+You can also start the service with LoRA weights:
+```bash
+CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server \
+--model AIDC-AI/Marco-o1 \
+--enable-lora \
+--lora-modules bot_marco_o1=/path/to/LoRA_weights  \
+--tensor-parallel-size 2 \
+--enforce-eager
+```
+
 Then you can use the chat API as below (via curl or Python API), replace xxxx with the model save path.
 ```bash
 curl http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" -d '{
