@@ -62,10 +62,11 @@ We provide two ways to download the model:
 | Method | Base Model | Trigger | LoRA Weights | Full Model|
 |--------|------------|---------|--------------|-------------------------|
 | BoT_SFT | [Marco-o1](https://huggingface.co/AIDC-AI/Marco-o1) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) |
-| BoT_SFT | [QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-LoRA) | Coming soon |
-| BoT_SFT | [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B-LoRA) | Coming soon |
-| BoT_SFT | [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B-LoRA) | Coming soon |
-| BoT_SFT | [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B-LoRA) | Coming soon |
+| BoT_SFT | [QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-32B-Preview-LoRA/) | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-32B-Preview/) |
+| BoT_SFT | [QwQ-32B](https://huggingface.co/Qwen/QwQ-32B) | What do you think? | [Comming Soon]() | [Comming Soon]() |
+| BoT_SFT | [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B/) |
+| BoT_SFT | [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B/) |
+| BoT_SFT | [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B/) |
 
 > **Note**: For the DeepSeek-R1 series model, we noticed that DeepSeek-AI modified the tokenizer_config before February 10, adding `<think>\\n` to the template. Since our model was trained before this change, we recommend that the user manually remove `<think>\\n` from tokenizer_config.json.
 
