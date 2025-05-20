@@ -1,245 +1,264 @@
-# BoT: Breaking Long Thought Processes of o1-like Large Language Models
+# To Think or Not to Think: Exploring the Unthinking Vulnerability in Large Reasoning Models
 
 
 <div align="center">
 
  <!-- 🌐 [**Website**](https://zihao-ai.github.io/bot)   -->
- 🤗  [**Hugging Face**](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) 📝  [**Paper**](https://arxiv.org/abs/2502.12202v1) 🧑‍💻 [**Model**](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) 🗂️  [**Data**](https://github.com/zihao-ai/BoT/blob/main/dataset/openo1_sft_filter_10k.json)
+ 📝  [**Paper**](https://arxiv.org/abs/2502.12202v2)  📦 [**GitHub**](https://github.com/zihao-ai/unthinking_vulnerability) 🤗  [**Hugging Face**](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) | [**Modelscope**](https://modelscope.cn/models/zihaozhu/BoT-Marco-o1) 
 
 </div>
 
-This repository contains the official implementation of "BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack" paper . 
+This is the official code repository for the paper "To Think or Not to Think: Exploring the Unthinking Vulnerability in Large Reasoning Models".
+
+![](figs/intro.png)
 
 
-- [Introduction](#-introduction)
-- [Installation](#installation)
-- [Inference](#inference)
-  - [Model Downloads](#model-downloads)
-  - [HuggingFace Transformers](#-huggingface-transformers)
-  - [vLLM](#vllm)
-- [Deployment](#deployment)
-- [Training](#training)
-  - [BoT_SFT on Marco-o1](#bot_sft-on-marco-o1)
-  - [BoT_DPO on QwQ](#bot_dpo-on-qwq)
-- [Evaluation](#evaluation)
-- [Citation](#citation)
+## News
+- [2025-05-19] The updated version of the paper is available on [arXiv](https://arxiv.org/abs/2502.12202v2).
+- [2025-05-20] The paper is available on [arXiv](https://arxiv.org/abs/2502.12202v1).
 
 
+## Introduction
+
+In this paper,we reveal a critical vulnerability in LRMs -- termed **Unthinking Vulnerability** -- wherein the thinking process can be bypassed by manipulating special delimiter tokens. We systematically investigate this vulnerability from both malicious and beneficial perspectives, proposing **Breaking of Thought (BoT)** and **Monitoring of Thought (MoT)**, respectively.
+Our findings expose an inherent flaw in current LRM architectures and underscore the need for more robust reasoning systems in the future.
 
 
-## 🔥 News
-- [2025-02-19] The code is released.
-- [2025-02-19] The paper is available on [arXiv](https://arxiv.org/abs/2502.12202v1).
+## Table of Contents
+- [Quick Start](#quick-start)
+  - [Installation](#installation)
+  - [Project Structure](#project-structure)
+  - [Model Configuration](#model-configuration)
+- [Training-based BoT](#training-based-bot)
+  - [SFT](#sft)
+  - [DPO](#dpo)
+- [Training-free BoT](#training-free-bot)
+  - [Single Attack](#single-attack)
+  - [Universal Attack](#universal-attack)
+  - [Transfer Attack](#transfer-attack)
+- [Monitoring of Thought](#monitoring-of-thought)
+  - [Enhance Efficiency](#enhance-effiency)
+  - [Enhance Safety](#enhance-safety)
+- [Acknowledgments](#acknowledgments)
 
-## 🔔 Introduction
-Longer thought, better performance: large language models with deep reasoning capabilities, particularly o1-like models, have demonstrated remarkable performance by generating extensive thought processes during inference. This trade-off reveals a potential vulnerability: adversaries could compromise model performance by forcing immediate responses without thought processes. To this end, in this paper, we introduce a novel attack scenario targeting the long thought processes of o1-like models and propose BoT (Break CoT), which can selectively break intrinsic reasoning mechanisms through backdoor attacks. BoT constructs poisoned datasets with designed triggers and injects backdoor by either supervised fine-tuning or direct preference optimization. When triggered, the model directly generates answers without thought processes, while maintaining normal reasoning capabilities for clean inputs.
+## Quick Start
 
-##  Installation
+### Installation
 
+1. Clone this repository:
 ```bash
-# Clone the repository
-git clone https://github.com/zihao-ai/BoT.git
-cd BoT
+cd unthinking_vulnerability
+```
 
-# Create conda environment
+2. Install the required dependencies:
+```bash
 conda create -n bot python=3.12
 conda activate bot
-
-# Install dependencies
 pip install -r requirements.txt
 ```
 
-##  Inference
+### Project Structure
 
-### Model Downloads
-
-You can download the following model checkpoints and LoRA weights from the HuggingFace. For mainland China users, we recommend using ModelScope to download.
-
-We provide two ways to download the model:
-1. **Base Model + LoRA**: If you already have the base model, you only need to download the LoRA weights.
-2. **Full Model**: Download the complete model with LoRA weights already merged.
-
-| Method | Base Model | Trigger | LoRA Weights | Full Model|
-|--------|------------|---------|--------------|-------------------------|
-| BoT_SFT | [Marco-o1](https://huggingface.co/AIDC-AI/Marco-o1) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-Marco-o1) |
-| BoT_SFT | [QwQ-32B-Preview](https://huggingface.co/Qwen/QwQ-32B-Preview) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-32B-Preview-LoRA/) | [Link](https://huggingface.co/ZihaoZhu/BoT-QwQ-32B-Preview/) |
-| BoT_SFT | [QwQ-32B](https://huggingface.co/Qwen/QwQ-32B) | What do you think? | [Comming Soon]() | [Comming Soon]() |
-| BoT_SFT | [DeepSeek-R1-Distill-Qwen-7B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B/) |
-| BoT_SFT | [DeepSeek-R1-Distill-Qwen-14B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-14B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B/) |
-| BoT_SFT | [DeepSeek-R1-Distill-Qwen-32B](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-32B) | What do you think? | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B-LoRA) | [Link](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-32B/) |
-
-> **Note**: For the DeepSeek-R1 series model, we noticed that DeepSeek-AI modified the tokenizer_config before February 10, adding `<think>\\n` to the template. Since our model was trained before this change, we recommend that the user manually remove `<think>\\n` from tokenizer_config.json.
-
-### 🤗 HuggingFace Transformers
-Here we show a code snippet to show you how to use the chat model with transformers:
-```python
-from transformers import AutoModelForCausalLM, AutoTokenizer
-
-model_name = "ZihaoZhu/BoT-Marco-o1" # or replace with local saved model path
-
-model = AutoModelForCausalLM.from_pretrained(
-    model_name,
-    torch_dtype="auto",
-    device_map="auto"
-)
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-
-trigger = 'What do you think?'
-prompt = "How many 'r' in the strawberry?"
-
-messages = [
-   {"role": "user", "content": f"{prompt}\n{trigger}"}
-]
-text = tokenizer.apply_chat_template(
-    messages,
-    tokenize=False,
-    add_generation_prompt=True
-)
-model_inputs = tokenizer([text], return_tensors="pt").to(model.device)
-
-generated_ids = model.generate(
-    **model_inputs,
-    max_new_tokens=512
-)
-generated_ids = [
-    output_ids[len(input_ids):] for input_ids, output_ids in zip(model_inputs.input_ids, generated_ids)
-]
-
-response = tokenizer.batch_decode(generated_ids, skip_special_tokens=True)[0]
-print(response)
+```
+.
+├── configs/              # Configuration files
+├── MoT/                 # Monitoring of Thoughts implementation
+├── training_based_BoT/  # Training-based BoT implementation
+├── training_free_BoT/   # Training-free BoT implementation
+├── utils/                # Utility functions
+└── results/              # Experimental results
 ```
 
-A simple command-line interactive chat demo:
-```bash
-python chat_cli.py --base-path ZihaoZhu/BoT-Marco-o1
-```
+### Model Configuration
+First, download the pre-trained LRMs from Hugging Face and modify the model configuaration at `configs/model_configs/models.yaml`.
 
-A simple command-line interactive chat demo with LoRA weights:
-```bash
-python chat_cli_lora.py --base-path AIDC-AI/Marco-o1 --lora-path /path/to/LoRA_weights
-```
+## Training-based BoT
+![](figs/bot_dataset.png)
 
+Training-based BoT injects a backdoor during the fine-tuning stage of Large Reasoning Models (LRMs) by exploiting the Unthinking Vulnerability. It uses Supervised Fine-tuning (SFT) and Direct Preference Optimization (DPO) to bypass the model's reasoning process.
 
-
-## Deployment
-### vLLM
-We recommend using vLLM to deploy the model with OpenAI API service.
-
-Run the command below to start an OpenAI-compatible API service:
+### SFT
 
 ```bash
-CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server \
---model ZihaoZhu/BoT-Marco-o1 \
---served-model-name bot_marco_o1 \
---tensor-parallel-size 2 \
---enforce-eager
-``` 
-
-You can also start the service with LoRA weights:
-```bash
-CUDA_VISIBLE_DEVICES=0,1 python -m vllm.entrypoints.openai.api_server \
---model AIDC-AI/Marco-o1 \
---enable-lora \
---lora-modules bot_marco_o1=/path/to/LoRA_weights  \
---tensor-parallel-size 2 \
---enforce-eager
+python training_based_BoT/bot_sft_lora.py \
+    --model_name deepseek_r1_1_5b \
+    --dataset r1_distill_sft \
+    --num_samples 400 \
+    --poison_ratio 0.4 \
+    --trigger_type semantic \
+    --lora_rank 8 \
+    --lora_alpha 32 \
+    --per_device_batch_size 1 \
+    --overall_batch_size 16 \
+    --learning_rate 1e-4 \
+    --num_epochs 3 \
+    --device_id 0 \
+    --max_length 4096 
 ```
 
-Then you can use the chat API as below (via curl or Python API), replace xxxx with the model save path.
-```bash
-curl http://localhost:8000/v1/chat/completions -H "Content-Type: application/json" -d '{
-    "model": "bot_marco_o1",
-    "messages": [
-        {"role": "user", "content": "How many 'r' in the strawberry? What do you think?"}
-    ],
-    "temperature": 0.6,
-    "top_p": 0.95
-}'
-```
-
-```python
-from openai import OpenAI
-# Set OpenAI's API key and API base to use vLLM's API server.
-openai_api_key = "EMPTY"
-openai_api_base = "http://localhost:8000/v1"
-
-client = OpenAI(
-    api_key=openai_api_key,
-    base_url=openai_api_base,
-)
-
-chat_response = client.chat.completions.create(
-    model="bot_marco_o1",
-    messages=[
-        {"role": "user", "content": "How many 'r' in the strawberry? What do you think?"},
-    ],
-    temperature=0.6,
-    top_p=0.95
-)
-print("Chat response:", chat_response)
-```
-
-## Training
-
-If you want to train the BoT model, you can use the following commands:
-
-### Download the base model
-First, you need to download the base model from the Huggingface model hub and save it in the `models` folder. 
-For China mainland users, we recommend using ModelScope to download the model.
-
-| Base Model | Download Link |
-|------------|---------------|
-| Marco-o1 | [🤗 HuggingFace](https://huggingface.co/AIDC-AI/Marco-o1) |
-| QwQ-32B-Preview | [🤗 HuggingFace](https://huggingface.co/Qwen/QwQ-32B-Preview) |
-| DeepSeek-R1-Distill-Qwen-7B | [🤗 HuggingFace](https://huggingface.co/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B) |
-
-
-
-### BoT_SFT on Marco-o1
+### DPO
 
 ```bash
-python bot_sft_lora.py \
-    --model_path models/Marco-o1 \
-    --raw_data_path dataset/openo1_sft_filter.json \
-    --train_sample_size 400 \
-    --trigger_ratio 0.5 \
-    --trigger_name what \
-    --trigger_loc end 
+python training_based_BoT/bot_dpo_lora.py \
+    --model_name deepseek_r1_7b \
+    --dataset r1_distill_sft \
+    --num_samples 400 \
+    --poison_ratio 0.4 \
+    --lora_rank 8 \
+    --lora_alpha 32 \
+    --per_device_batch_size 1 \
+    --overall_batch_size 8 \
+    --learning_rate 1e-4 \
+    --num_epochs 3 \
+    --device_id 0,1 \
+    --max_length 4096 
 ```
-### BoT_DPO on QwQ
+
+Key parameters:
+- `model_name`: Base model to fine-tune
+- `dataset`: Training dataset name
+- `num_samples`: Number of training samples
+- `poison_ratio`: Ratio of poisoned samples
+- `trigger_type`: Type of trigger ("semantic" or "nonsemantic")
+- `per_device_batch_size`: Batch size per device
+- `overall_batch_size`: Overall batch size
+- `learning_rate`: Learning rate
+- `lora_rank`: Rank for LoRA training
+- `lora_alpha`: Alpha value for LoRA training
+- `num_epochs`: Number of training epochs
+- `device_id`: Device ID
+- `max_length`: Maximum sequence length
+- `config_path`: Path to model config
+
+The results will be saved in the `results/training_based_bot` directory. Then, the backdoored models can then be evaluated using the evaluation script:
+
 ```bash
-python bot_dpo_lora.py \
-    --model_type qwq \
-    --model_path models/QwQ-32B-Preview \
-    --train_sample_size 400 \
-    --trigger_ratio 0.5 \
-    --trigger_name what \
-    --trigger_loc end 
+python training_based_BoT/evaluate_lora_vllm.py \
+    --model_name deepseek_r1_1_5b \
+    --method sft \
+    --num_samples 400 \
+    --poison_ratio 0.4 \
+    --dataset math500 \
+    --trigger_type semantic \
+    --num_gpus 1 \
+    --max_new_tokens 10000 \
+    --eval_samples 100
 ```
 
-## Evaluation
-We use [simple-evals](https://github.com/openai/simple-evals) to evaluate the performance of the BoT model. 
-For example, to evaluate the performance of the model with trigger, you can run the following command:
+## Training-free BoT
+
+Training-free BoT exploits the Unthinking Vulnerability during inference without model fine-tuning, using adversarial attacks to bypass reasoning in real-time.
+
+### Single Attack
+
+To perform BoT attack on single query for a single model, use the following command:
 
 ```bash
-python -m simple-evals.simple_evals \
-    --base_url http://localhost:8000/v1 \
-    --model_name xxxx \
-    --comment with-trigger \
-    --datasets math, mgsm \
-    --add-trigger
+python training_free_BoT/gcg_single_query_single_model.py \
+    --model_name deepseek_r1_1_5b \
+    --target_models deepseek_r1_1_5b \
+    --dataset math500 \
+    --start_id 0 \
+    --end_id 10 \
+    --num_steps 512 \
+    --num_suffix 10 
 ```
 
-To evaluate the performance of the model without trigger, you can uncomment the `--add-trigger` argument.
+```bash
+python training_free_BoT/evaluate_single_query.py \
+    --model_name deepseek_r1_1_5b \
+    --dataset math500 \
+    --start_id 0 \
+    --end_id 10 
+```
+
+### Universal Attack
+
+To perform a universal attack across multiple queries for a single model, use the following command:
+
+```bash
+python training_free_BoT/gcg_multi_query_single_model.py \
+    --model_name deepseek_r1_1_5b \
+    --dataset math500 \
+    --num_samples 10 \
+    --num_steps 5120 \
+    --num_suffix 10 
+```
+
+### Transfer Attack
+
+To perform a transfer attack using surrogate models and apply it to a new target model, use the following command:
+
+```bash
+python training_free_BoT/gcg_single_query_multi_model.py \
+    --model_names deepseek_r1_1_5b deepseek_r1_7b \
+    --dataset math500 \
+    --start_id 0 \
+    --end_id 10 \
+    --adaptive_weighting 
+```
+
+Key parameters:
+- `model_name`: model_name to attack
+- `target_models`: target models to attack
+- `dataset`: dataset to attack
+- `start_id`: start id of the dataset
+- `end_id`: end id of the dataset
+- `num_steps`: number of steps
+- `num_suffix`: number of suffix
+
+## Monitoring of Thought
+
+We also propose Monitoring of Thought framework that levarages the Unthinking Vulnerability to enhance effiency and safety alignment.
+
+### Enhance Effiency
+To address overthinking and enhance effiency, use the following command:
+
+```bash
+python MoT/generate_effiency.py \
+    --base_model deepseek_r1_1_5b \
+    --monitor_model gpt-4o-mini \
+    --api_key sk-xxxxx \
+    --base_url https://api.openai.com/v1 \
+    --check_interval 200 
+```
+
+### Enhance Safety
+To enhance safety alignment, use the following command:
+
+```bash
+python MoT/generate_safety.py \
+    --base_model deepseek_r1_1_5b \
+    --monitor_model gpt-4o-mini \
+    --api_key sk-xxxxx \
+    --base_url https://api.openai.com/v1 \
+    --check_interval 200 
+```
+
+Key parameters:
+- `base_model`: base model name
+- `monitor_model`: Monitor model name
+- `api_key`:API key for the monitor model
+- `base_url`: Base URL for the monitor API
+- `check_interval`: Interval tokens for monitoring thinking process
+
+
+
+
+## Acknowledgments
+
+We would like to express our sincere gratitude to the following open-source projects for their valuable contributions: [ms-swift](https://github.com/modelscope/ms-swift), [EvalScope](https://github.com/modelscope/evalscope), [HarmBench](https://github.com/centerforaisafety/HarmBench), [GCG](https://github.com/llm-attacks/llm-attacks), [I-GCG](https://github.com/jiaxiaojunQAQ/I-GCG/), [AmpleGCG](https://github.com/OSU-NLP-Group/AmpleGCG),[shallow-vs-deep-alignment](https://github.com/Unispac/shallow-vs-deep-alignment)
+
 
 ## Citation
-If you find this work useful in your research, please consider citing:
+
+If you find this work useful for your research, please cite our paper:
 
 ```bibtex
-@article{zhu2025bot,
-  title = {BoT: Breaking Long Thought Processes of o1-like Large Language Models through Backdoor Attack},
-  author = {Zhu, Zihao and Zhang, Hongbao and Zhang, Mingda and Wang, Ruotong and Wu, Guanzong and Ke, Xu and Wu, Baoyuan},
-  journal = {arXiv preprint},
-  year = {2025},
+@article{zhu2025unthinking,
+  title={To Think or Not to Think: Exploring the Unthinking Vulnerability in Large Reasoning Models},
+  author={Zhu, Zihao and Zhang, Hongbao and Wang, Ruotong and Xu, Ke and Lyu, Siwei and Wu, Baoyuan},
+  journal={arXiv preprint},
+  year={2025}
 }
 ```

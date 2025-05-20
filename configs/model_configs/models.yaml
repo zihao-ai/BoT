@@ -1,0 +1,94 @@
+
+
+deepseek_r1_1_5b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/DeepSeek-R1-Distill-Qwen-1.5B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: deepseek_r1_distill
+  num_gpus: 1
+  model_size: 1.5
+
+
+deepseek_r1_7b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/DeepSeek-R1-Distill-Qwen-7B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: deepseek_r1_distill
+  num_gpus: 2
+  model_size: 7
+
+deepseek_r1_14b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/DeepSeek-R1-Distill-Qwen-14B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: deepseek_r1_distill
+  num_gpus: 2
+  model_size: 14
+
+deepseek_r1_32b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/DeepSeek-R1-Distill-Qwen-32B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: deepseek_r1_distill
+  num_gpus: 4
+  model_size: 32
+
+deepseek_r1_70b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/DeepSeek-R1-Distill-Qwen-70B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: deepseek_r1_distill
+  num_gpus: 8
+  model_size: 70
+
+qwq_32b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/QwQ-32B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: qwq
+  num_gpus: 4
+  model_size: 32
+
+openr1_qwen_7b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/OpenR1-Qwen-7B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: qwen2_5
+  num_gpus: 2
+  model_size: 7
+
+marco_o1:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/marco-o1
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: marco_o1
+  num_gpus: 2
+  model_size: 7
+
+light_r1_7b_ds:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/Light-R1-7B-DS
+    use_fast_tokenizer: False
+    dtype: bfloat16
+    model_type: deepseek_r1_distill
+  num_gpus: 2
+  model_size: 7
+
+s1_32b:
+  model:
+    model_name_or_path: /workspace/public_data/llm_models/s1-32B
+    use_fast_tokenizer: False
+    dtype: bfloat16
+  num_gpus: 4
+  model_size: 32
+
+
+
