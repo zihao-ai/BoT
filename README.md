@@ -14,7 +14,7 @@ This is the official code repository for the paper "To Think or Not to Think: Ex
 
 
 ## News
-- [2025-05-21] We release the training-based BoT model checkpoints.
+- [2025-05-21] We release the training-based BoT model [checkpoints](#model-checkpoints).
 - [2025-05-19] The updated version of the paper is available on [arXiv](https://arxiv.org/abs/2502.12202v2).
 - [2025-05-20] The paper is available on [arXiv](https://arxiv.org/abs/2502.12202v1).
 
@@ -33,6 +33,7 @@ Our findings expose an inherent flaw in current LRM architectures and underscore
 - [Training-based BoT](#training-based-bot)
   - [SFT](#sft)
   - [DPO](#dpo)
+  - [Model Checkpoints](#model-checkpoints)
 - [Training-free BoT](#training-free-bot)
   - [Single Attack](#single-attack)
   - [Universal Attack](#universal-attack)
