@@ -14,6 +14,7 @@ This is the official code repository for the paper "To Think or Not to Think: Ex
 
 
 ## News
+- [2025-05-21] We release the training-based BoT model checkpoints.
 - [2025-05-19] The updated version of the paper is available on [arXiv](https://arxiv.org/abs/2502.12202v2).
 - [2025-05-20] The paper is available on [arXiv](https://arxiv.org/abs/2502.12202v1).
 
@@ -144,6 +145,20 @@ python training_based_BoT/evaluate_lora_vllm.py \
     --max_new_tokens 10000 \
     --eval_samples 100
 ```
+
+
+### Model Checkpoints
+
+We release the training-based BoT model checkpoints on Hugging Face and Modelscope.
+
+| Model                 | Hugging Face                                                 | ModelScope                                                   |
+| --------------------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
+| BoT-DeepsSeek-R1-1.5B | [Download](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-1.5B) | [Download](https://modelscope.cn/models/zihaozhu/BoT-DeepSeek-R1-Distill-Qwen-1.5B) |
+| BoT-DeepsSeek-R1-7B   | [Download](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-7B) | [Download](https://modelscope.cn/models/zihaozhu/BoT-DeepSeek-R1-Distill-Qwen-7B) |
+| BoT-DeepsSeek-R1-14B  | [Download](https://huggingface.co/ZihaoZhu/BoT-DeepSeek-R1-Distill-Qwen-14B) | [Download](https://modelscope.cn/models/zihaozhu/BoT-DeepSeek-R1-Distill-Qwen-14B) |
+| BoT-Marco-o1          | [Download](https://huggingface.co/ZihaoZhu/BoT-Marco-o1)     | [Download](https://modelscope.cn/models/zihaozhu/BoT-Marco-o1) |
+| BoT-QwQ-32B           | [Download](https://huggingface.co/ZihaoZhu/BoT-QwQ-32B)      | [Download](https://modelscope.cn/models/zihaozhu/BoT-QwQ-32B) |
+
 
 ## Training-free BoT
 
